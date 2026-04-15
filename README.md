@@ -53,6 +53,7 @@ Ask Claude for "slides", "a deck", or "something to present" and keynot activate
 - **Brand theming** — CSS variables for primary/accent/typography swap in seconds
 - **Layout library** — split panels, stat columns, value cards, approach rows, photo panels
 - **Embedded assets** — fonts via CDN, images via base64 — one file, no broken links
+- **PDF export** — `Cmd+P` → Save as PDF gives one slide per page, backgrounds intact, no extra tooling
 
 ## Before / After
 
@@ -139,6 +140,14 @@ Dark theme, serif headings.
 ```
 
 keynot will extract brand parameters (colors, type, layout language), pick a slide sequence that matches your goal, and ship a single `.html` file you can open in any browser.
+
+## Exporting to PDF
+
+Every generated deck ships with a `@media print` block that un-stacks absolutely-positioned slides, kills animations, hides the nav bar, and sets `@page` to landscape. Result: open the deck, hit `Cmd+P` (`Ctrl+P` on Windows/Linux), pick "Save as PDF" — you get one slide per page with backgrounds and typography intact. No external tools.
+
+See a generated example: [**keynot-for-zombies.pdf**](examples/keynot-for-zombies.pdf) — the zombies demo deck exported straight from Chrome's print dialog.
+
+**Tip:** enable "Background graphics" in the print dialog if it's off by default, and pick a landscape paper size (or let the browser fit to the `1600 × 1000` `@page` rule). Firefox handles pixel-based `@page size` less reliably than Chrome/Safari — if output looks wrong there, the skill docs include a physical-units fallback.
 
 ## Example use cases
 
