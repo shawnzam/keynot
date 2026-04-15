@@ -316,6 +316,66 @@ The overlay HTML is included in the [Shell Structure](#shell-structure) above. D
  
 **Why not full mobile responsiveness?** Split panels, stat columns, and photo backgrounds all rely on horizontal real estate to communicate. A reflowed mobile version is effectively a different deck — and a worse one. PowerPoint and Google Slides also fail on portrait mobile; the audience already accepts this for the format.
  
+### Print / PDF Export
+ 
+Users should be able to hit `Cmd+P` → "Save as PDF" and get a clean one-slide-per-page PDF. The screen deck stacks slides absolutely and hides inactive ones via `opacity: 0`, so a naive print captures only the active slide. The fix: **a `@media print` block that un-stacks every slide, kills animations, hides nav/overlays, and forces landscape page size**.
+ 
+Add this near the bottom of the `<style>` block:
+ 
+```css
+/* Print / PDF export — Cmd+P → Save as PDF gives one slide per page */
+@media print {
+  @page {
+    size: 1600px 1000px;  /* native deck aspect ratio; user can fit-to-page */
+    margin: 0;
+  }
+  html, body {
+    width: 1600px; height: auto;
+    overflow: visible !important;
+    background: #fff;
+  }
+  .deck {
+    width: 1600px; height: auto;
+    position: static !important;
+  }
+  .slide {
+    position: relative !important;
+    inset: auto !important;
+    width: 1600px; height: 1000px;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    page-break-after: always;
+    break-after: page;
+    transform: none !important;
+  }
+  /* Kill all animations and transitions so content is in final state */
+  *, *::before, *::after {
+    animation: none !important;
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+    transition: none !important;
+  }
+  .slide .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  /* Hide interactive chrome */
+  .nav, .rotate-overlay { display: none !important; }
+  /* Preserve backgrounds and colors in print output */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+```
+ 
+**Usage:** user opens the deck in a browser, hits `Cmd+P` (or `Ctrl+P`), picks "Save as PDF" as the destination, and optionally toggles "Background graphics" on if the print dialog offers it. The default paper size in the dialog doesn't matter much — the `@page` rule sets the content frame, and browsers scale to fit. For pixel-perfect output, users can pick "Custom" paper size matching `1600 × 1000` in the dialog.
+ 
+**Gotchas:**
+- Gradients and some photo-panel rasterization can look slightly different from screen (Chrome and Safari differ). If the deck must look identical in print, keep backgrounds solid.
+- Slides taller than 1000px will clip. Don't let content overflow the slide bounds on screen and it won't clip in print.
+- Firefox honors `@page size: <pixels>` less reliably than Chrome/Safari. For critical Firefox users, swap to `size: 10in 6.25in` (same ratio, physical units).
+ 
 ---
  
 ## Step 3: Layout Patterns

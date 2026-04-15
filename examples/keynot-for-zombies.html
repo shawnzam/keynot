@@ -419,6 +419,48 @@
   @media (orientation: portrait) and (max-width: 900px) {
     .rotate-overlay { display: flex; }
   }
+
+  /* Print / PDF export — Cmd+P → Save as PDF gives one slide per page */
+  @media print {
+    @page {
+      size: 1600px 1000px;
+      margin: 0;
+    }
+    html, body {
+      width: 1600px; height: auto;
+      overflow: visible !important;
+      background: #fff;
+    }
+    .deck {
+      width: 1600px; height: auto;
+      position: static !important;
+    }
+    .slide {
+      position: relative !important;
+      inset: auto !important;
+      width: 1600px; height: 1000px;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      page-break-after: always;
+      break-after: page;
+      transform: none !important;
+    }
+    *, *::before, *::after {
+      animation: none !important;
+      animation-duration: 0s !important;
+      animation-delay: 0s !important;
+      transition: none !important;
+    }
+    .slide .reveal {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    .nav, .rotate-overlay { display: none !important; }
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+  }
 </style>
 </head>
 <body>

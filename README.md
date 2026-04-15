@@ -86,7 +86,17 @@ keynot ships its own Claude Code plugin marketplace. Add it once, install the pl
 /plugin install keynot@keynot-marketplace
 ```
 
-That's it. The skill is now available in every Claude Code session. Update with `/plugin update keynot`.
+That's it. The skill is now available in every Claude Code session.
+
+#### Updating
+
+```
+/plugin marketplace update keynot-marketplace
+/plugin install keynot@keynot-marketplace
+/reload-plugins
+```
+
+Self-hosted marketplaces don't auto-update. Run these whenever you want to pull the latest.
 
 ### Option B — Drop-in SKILL.md (no plugin manifest)
 
