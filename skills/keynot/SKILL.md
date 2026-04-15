@@ -113,6 +113,17 @@ Every deck is a single HTML file. All assets (fonts via CDN, images via base64) 
     <span class="counter" id="counter">1 / N</span>
     <button id="fsBtn" onclick="toggleFS()">&#x26F6;</button>
   </div>
+  <!-- Portrait/mobile rotate hint (see Portrait / Mobile Handling below) -->
+  <div class="rotate-overlay" aria-hidden="true">
+    <svg class="rotate-icon" width="56" height="56" viewBox="0 0 24 24"
+         fill="none" stroke="currentColor" stroke-width="1.4"
+         stroke-linecap="round" stroke-linejoin="round">
+      <rect x="5" y="2" width="14" height="20" rx="2.5" />
+      <line x1="12" y1="18.5" x2="12.01" y2="18.5" />
+    </svg>
+    <h2>Rotate your device</h2>
+    <p>This deck is designed for landscape viewing. Turn your phone sideways to continue.</p>
+  </div>
   <script><!-- All JS inline --></script>
 </body>
 </html>
@@ -258,6 +269,52 @@ document.addEventListener('touchend', e => {
   if (Math.abs(dx) > 50) go(dx < 0 ? cur + 1 : cur - 1);
 }, { passive: true });
 ```
+ 
+### Portrait / Mobile Handling
+ 
+Slide decks are a landscape medium. Rather than reflowing split-panel layouts into unreadable mobile stacks, **show a "rotate your device" overlay when the viewport is portrait + narrow**. This covers iPhones held vertically without doubling the CSS for every layout pattern. Landscape phone viewing keeps working because `clamp()` font sizing already scales down.
+ 
+Add this CSS to every deck, near the bottom of the `<style>` block so it overrides nothing:
+ 
+```css
+/* Rotate-to-landscape overlay — only visible on portrait phones */
+.rotate-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  z-index: 9999;
+  background: var(--primary);
+  color: var(--white);
+  flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 40px;
+  font-family: var(--sans);
+}
+.rotate-overlay .rotate-icon {
+  margin-bottom: 24px;
+  color: var(--accent);
+  animation: rotate-hint 2.4s ease-in-out infinite;
+}
+.rotate-overlay h2 {
+  font-family: var(--serif);
+  font-size: 30px; font-weight: 400;
+  margin-bottom: 12px; letter-spacing: -.01em;
+}
+.rotate-overlay p {
+  font-size: 14px; line-height: 1.6;
+  opacity: .72; max-width: 280px;
+}
+@keyframes rotate-hint {
+  0%, 40%, 100% { transform: rotate(0deg); }
+  60%, 80%      { transform: rotate(90deg); }
+}
+@media (orientation: portrait) and (max-width: 900px) {
+  .rotate-overlay { display: flex; }
+}
+```
+ 
+The overlay HTML is included in the [Shell Structure](#shell-structure) above. Drop both in and the deck handles portrait phones gracefully without any per-slide changes.
+ 
+**Why not full mobile responsiveness?** Split panels, stat columns, and photo backgrounds all rely on horizontal real estate to communicate. A reflowed mobile version is effectively a different deck — and a worse one. PowerPoint and Google Slides also fail on portrait mobile; the audience already accepts this for the format.
  
 ---
  

@@ -158,6 +158,7 @@ The [`SKILL.md`](skills/keynot/SKILL.md) file walks Claude through:
 - **You need real-time collaboration** — Google Slides wins here.
 - **Heavy animations or transitions** — keynot does opacity fades and staggered reveals, not 3D cube transitions.
 - **Video embeds** — possible, but bloats the single-file deck quickly.
+- **Portrait mobile viewing** — decks are landscape-first. Phones held vertically see a "rotate your device" overlay; landscape phone viewing works fine.
 
 For everything else — pitches, one-pagers, internal readouts, conference talks, lunch-and-learns — keynot ships faster and looks sharper than the alternatives.
 
