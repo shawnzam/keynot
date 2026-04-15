@@ -26,7 +26,7 @@
 
 A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill that turns any prompt into a polished, self-contained HTML slide deck — keyboard navigation, swipe, fullscreen, animated reveals, brand-accurate design. Single file. Opens anywhere. No runtime dependencies.
 
-Built for the moment you need to present something and you don't want to open PowerPoint.
+Built for the moment you need to present something and you don't want to open PowerPoint. Read the writeup: [**Stop Reaching for PowerPoint**](https://zamechek.com/blog/stop-reaching-for-powerpoint/) — includes a live zombies-themed demo deck.
 
 ## What it does
 
