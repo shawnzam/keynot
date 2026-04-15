@@ -24,9 +24,11 @@
 
 ---
 
-A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill that turns any prompt into a polished, self-contained HTML slide deck — keyboard navigation, swipe, fullscreen, animated reveals, brand-accurate design. Single file. Opens anywhere. No runtime dependencies.
+Someone asks you to "put together a few slides" and your hand drifts to the PowerPoint icon out of pure muscle memory. Then come the next twenty minutes of fighting a template you didn't pick, nudging a text box three pixels to the left, and discovering that your brand colors aren't in the theme. None of that is the presentation. None of that is the idea. That's tax you pay for using a tool built in 1987.
 
-Built for the moment you need to present something and you don't want to open PowerPoint. Read the writeup: [**Stop Reaching for PowerPoint**](https://zamechek.com/blog/stop-reaching-for-powerpoint/).
+**keynot** is a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill that stops paying it. Ask Claude for "slides" or "a deck" and it ships you a single `.html` file — keyboard nav, swipe, fullscreen, staggered reveals, editorial typography, all wired up. It opens in any browser, runs offline, and weighs less than the email you were going to attach a 40MB `.pptx` to. Hand Claude a brand guide — a PDF, a URL, even a paragraph describing the vibe — and it extracts the palette and type system into CSS variables so the whole deck inherits it. *"Match this brand"* stops being a half-day in Figma and starts being a sentence.
+
+Read the writeup: [**Stop Reaching for PowerPoint**](https://zamechek.com/blog/stop-reaching-for-powerpoint/).
 
 ## Live demo
 
@@ -54,27 +56,6 @@ Ask Claude for "slides", "a deck", or "something to present" and keynot activate
 - **Layout library** — split panels, stat columns, value cards, approach rows, photo panels
 - **Embedded assets** — fonts via CDN, images via base64 — one file, no broken links
 - **PDF export** — `Cmd+P` → Save as PDF gives one slide per page, backgrounds intact, no extra tooling
-
-## Before / After
-
-<table>
-<tr>
-<td width="50%">
-
-### 🪟 Old way
-
-> "Open PowerPoint. Pick a template. Fight the master slide. Realize your brand colors aren't in the theme. Export to PDF. Send a 40MB file. Hope the fonts render."
-
-</td>
-<td width="50%">
-
-### 🗂️ keynot
-
-> "Make me a deck on X, use our brand guide." → one `deck.html`, double-click to open, press `f` for fullscreen, done.
-
-</td>
-</tr>
-</table>
 
 ## Install
 
@@ -123,7 +104,7 @@ The `SKILL.md` file is self-contained. Read it, copy the CSS/JS shell, and build
 
 ## How to use
 
-Once installed, just ask:
+Once installed, just ask. One sentence is usually enough — keynot asks follow-ups if it needs them.
 
 ```
 Make me a 5-slide deck introducing our new product.
@@ -135,11 +116,14 @@ Turn this doc into slides.
 ```
 
 ```
-I need something to present tomorrow on the roadmap.
-Dark theme, serif headings.
+I need something to present tomorrow on the roadmap. Dark theme, serif headings.
 ```
 
-keynot will extract brand parameters (colors, type, layout language), pick a slide sequence that matches your goal, and ship a single `.html` file you can open in any browser.
+```
+keynot, but if the audience was zombies, and lean into it.
+```
+
+keynot extracts brand parameters (colors, type, layout language), picks a slide sequence that matches your goal, and ships a single `.html` file you can open in any browser. Iterate in plain English: *"slide 3: swap the headline"*, *"make the accent color less aggressive"*, *"add a stat column with these three numbers."* No hunting through a sidebar of 40 objects.
 
 ## Exporting to PDF
 
@@ -180,6 +164,10 @@ The [`SKILL.md`](skills/keynot/SKILL.md) file walks Claude through:
 - **Portrait mobile viewing** — decks are landscape-first. Phones held vertically see a "rotate your device" overlay; landscape phone viewing works fine.
 
 For everything else — pitches, one-pagers, internal readouts, conference talks, lunch-and-learns — keynot ships faster and looks sharper than the alternatives.
+
+---
+
+The next time someone says *"can you throw together some slides,"* throw together some HTML instead.
 
 ## License
 
