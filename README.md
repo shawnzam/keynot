@@ -26,7 +26,22 @@
 
 A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill that turns any prompt into a polished, self-contained HTML slide deck — keyboard navigation, swipe, fullscreen, animated reveals, brand-accurate design. Single file. Opens anywhere. No runtime dependencies.
 
-Built for the moment you need to present something and you don't want to open PowerPoint. Read the writeup: [**Stop Reaching for PowerPoint**](https://zamechek.com/blog/stop-reaching-for-powerpoint/) — includes a live zombies-themed demo deck.
+Built for the moment you need to present something and you don't want to open PowerPoint. Read the writeup: [**Stop Reaching for PowerPoint**](https://zamechek.com/blog/stop-reaching-for-powerpoint/).
+
+## Live demo
+
+<p align="center">
+  <a href="https://shawnzam.github.io/keynot/examples/keynot-for-zombies.html">
+    <img src="assets/zombies-preview.png" alt="Live demo: Keynot for Zombies" width="820" />
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://shawnzam.github.io/keynot/examples/keynot-for-zombies.html"><strong>→ Open the live deck</strong></a><br />
+  <em>Arrow keys or swipe to navigate · press <code>f</code> for fullscreen</em>
+</p>
+
+Generated from a single prompt: *"keynot, but if the audience was zombies, and lean into it."* Everything — nav, fullscreen, animations, typography, all five slides — is one HTML file. [Source](examples/keynot-for-zombies.html).
 
 ## What it does
 
