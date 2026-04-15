@@ -169,6 +169,10 @@ For everything else — pitches, one-pagers, internal readouts, conference talks
 
 The next time someone says *"can you throw together some slides,"* throw together some HTML instead.
 
+## Acknowledgments
+
+Thanks to [Brandon Lafving](https://www.linkedin.com/in/brandon-lafving) for introducing me to the idea of generating presentations as self-contained HTML instead of reaching for PowerPoint. keynot wouldn't exist without that nudge.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
