@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="https://em-content.zobj.net/source/apple/391/bar-chart_1f4ca.png" width="120" />
+  <img src="assets/logo.png" alt="Keynot — Kill PowerPoint with HTML" width="520" />
 </p>
 
 <h1 align="center">keynot</h1>
 
 <p align="center">
-  <strong>decks in the browser. no keynote. no powerpoint. no install.</strong>
+  <strong>kill powerpoint with html.</strong>
 </p>
 
 <p align="center">
