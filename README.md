@@ -115,6 +115,16 @@ Dark theme, serif headings.
 
 keynot will extract brand parameters (colors, type, layout language), pick a slide sequence that matches your goal, and ship a single `.html` file you can open in any browser.
 
+## Example use cases
+
+- **Investor or pitch decks** — Paste your narrative, drop in a brand guide, get a polished deck in minutes. Iterate in plain English instead of wrestling with slide masters.
+- **Conference talks & tech demos** — Single HTML file that opens anywhere, runs offline, and won't embarrass you when the venue wifi dies. Keyboard nav and fullscreen are already wired up.
+- **Internal readouts & weekly updates** — Turn a status doc into a skimmable deck so your team actually reads it. Swap content in seconds when numbers change.
+- **Client one-pagers** — Match any client's brand from a PDF style guide and deliver something that looks bespoke without opening Figma.
+- **Workshop & teaching slides** — Build a course deck with embedded images, staggered reveals, and deep-linkable slide URLs. Students open it in their browser, no installs.
+- **Sales leave-behinds** — Ship a self-contained `.html` that prospects can forward internally. No broken fonts, no missing assets, no "please install our viewer."
+- **Portfolio & case studies** — Present past work with editorial-quality typography and layouts that match each project's brand.
+
 ## What's in the skill
 
 The [`SKILL.md`](skills/keynot/SKILL.md) file walks Claude through:
