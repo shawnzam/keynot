@@ -149,7 +149,3 @@ For everything else — pitches, one-pagers, internal readouts, conference talks
 ## License
 
 MIT — see [LICENSE](LICENSE).
-
-## Credits
-
-Structure inspired by [caveman](https://github.com/JuliusBrussee/caveman) — the `skills/<name>/SKILL.md` convention for publishable Claude Code skills.
