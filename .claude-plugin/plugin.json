@@ -1,0 +1,19 @@
+{
+  "name": "keynot",
+  "description": "Build polished, self-contained HTML slide decks from any prompt — keyboard nav, swipe, fullscreen, brand theming. No Keynote or PowerPoint required.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Shawn Zamechek",
+    "email": "shawnzam@gmail.com"
+  },
+  "homepage": "https://github.com/shawnzam/keynot",
+  "repository": "https://github.com/shawnzam/keynot",
+  "license": "MIT",
+  "keywords": [
+    "slides",
+    "presentation",
+    "deck",
+    "html",
+    "skill"
+  ]
+}

@@ -62,9 +62,20 @@ Ask Claude for "slides", "a deck", or "something to present" and keynot activate
 
 ## Install
 
-### As a Claude Code skill
+### Option A — Via `/plugin` (recommended)
 
-Drop `skills/keynot/SKILL.md` into your Claude Code skills directory:
+keynot ships its own Claude Code plugin marketplace. Add it once, install the plugin:
+
+```
+/plugin marketplace add shawnzam/keynot
+/plugin install keynot@keynot-marketplace
+```
+
+That's it. The skill is now available in every Claude Code session. Update with `/plugin update keynot`.
+
+### Option B — Drop-in SKILL.md (no plugin manifest)
+
+If you just want the skill without the plugin wrapper:
 
 ```bash
 # User-scoped (available everywhere)
@@ -78,9 +89,9 @@ curl -fsSL https://raw.githubusercontent.com/shawnzam/keynot/main/skills/keynot/
   -o .claude/skills/keynot/SKILL.md
 ```
 
-Then restart Claude Code. The skill auto-activates when you mention a deck, presentation, slides, or a brand style guide.
+Then restart Claude Code.
 
-### As a reference
+### Option C — As a reference
 
 The `SKILL.md` file is self-contained. Read it, copy the CSS/JS shell, and build decks by hand if you prefer.
 

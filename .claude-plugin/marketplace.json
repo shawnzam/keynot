@@ -1,0 +1,15 @@
+{
+  "name": "keynot-marketplace",
+  "owner": {
+    "name": "Shawn Zamechek",
+    "email": "shawnzam@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "keynot",
+      "source": "./",
+      "description": "Build polished, self-contained HTML slide decks from any prompt — keyboard nav, swipe, fullscreen, brand theming. No Keynote or PowerPoint required.",
+      "version": "1.0.0"
+    }
+  ]
+}
