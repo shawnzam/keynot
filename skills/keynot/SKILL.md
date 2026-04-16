@@ -101,7 +101,7 @@ Every deck is a single HTML file. All assets (fonts via CDN, images via base64) 
 </head>
 <body>
   <div class="deck" id="deck">
-    <div class="slide active" id="s1">...</div>
+    <div class="slide" id="s1">...</div>
     <div class="slide" id="s2">...</div>
     <!-- more slides -->
   </div>
@@ -217,19 +217,50 @@ document.addEventListener('fullscreenchange', () => {
     document.getElementById('fsBtn').innerHTML = '&#x26F6;';
 });
  
+// Deep-link & session persistence helpers
+function parseHash() {
+  const m = location.hash.match(/^#slide-(\d+)$/);
+  if (!m) return -1;
+  const idx = parseInt(m[1], 10) - 1;  // hash is 1-based, array is 0-based
+  return (idx >= 0 && idx < document.querySelectorAll('.slide').length) ? idx : -1;
+}
+function initialSlide() {
+  const fromHash = parseHash();
+  if (fromHash >= 0) return fromHash;
+  const stored = sessionStorage.getItem('keynot-slide');
+  if (stored !== null) {
+    const idx = parseInt(stored, 10);
+    if (idx >= 0 && idx < document.querySelectorAll('.slide').length) return idx;
+  }
+  return 0;
+}
+function persistSlide(idx) {
+  sessionStorage.setItem('keynot-slide', idx);
+  history.replaceState(null, '', '#slide-' + (idx + 1));
+}
+
 // Navigation
 const slides = document.querySelectorAll('.slide');  // REQUIRED — do not omit
 const dotsEl = document.getElementById('dots');
 const counter = document.getElementById('counter');
-let cur = 0;
- 
+let cur = initialSlide();
+
+// Remove default 'active' class from slide 1 if restoring a different slide
+slides.forEach(s => s.classList.remove('active'));
+
 slides.forEach((_, i) => {
   const d = document.createElement('div');
-  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.className = 'dot';
   d.addEventListener('click', () => go(i));
   dotsEl.appendChild(d);
 });
- 
+
+// Activate the initial slide
+slides[cur].classList.add('active');
+dotsEl.children[cur].classList.add('active');
+counter.textContent = `${cur + 1} / ${slides.length}`;
+persistSlide(cur);
+
 function go(n) {
   slides[cur].classList.remove('active');
   dotsEl.children[cur].classList.remove('active');
@@ -237,7 +268,14 @@ function go(n) {
   slides[cur].classList.add('active');
   dotsEl.children[cur].classList.add('active');
   counter.textContent = `${cur + 1} / ${slides.length}`;
+  persistSlide(cur);
 }
+
+// Deep-link: respond to manual hash changes or pasted URLs
+window.addEventListener('hashchange', () => {
+  const idx = parseHash();
+  if (idx >= 0 && idx !== cur) go(idx);
+});
  
 document.getElementById('next').addEventListener('click', () => go(cur + 1));
 document.getElementById('prev').addEventListener('click', () => go(cur - 1));
