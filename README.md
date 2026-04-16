@@ -80,16 +80,19 @@ keynot ships its own plugin marketplace. Add it once, install the plugin:
 Self-hosted marketplaces don't auto-update. Run these whenever you want to pull the latest.
 </details>
 
-### Codex
+### Codex (project-scoped)
 
-Clone the repo and install via the `/plugins` menu:
+Codex reads `AGENTS.md` from the current working directory — there's no global plugin registry. Drop the skill into whatever project you're presenting from:
 
 ```bash
-# macOS / Linux
-git clone https://github.com/shawnzam/keynot.git ~/.codex/plugins/keynot
+mkdir -p your-project/skills/keynot
+curl -fsSL https://raw.githubusercontent.com/shawnzam/keynot/main/skills/keynot/SKILL.md \
+  -o your-project/skills/keynot/SKILL.md
+curl -fsSL https://raw.githubusercontent.com/shawnzam/keynot/main/AGENTS.md \
+  -o your-project/AGENTS.md
 ```
 
-Then in Codex: `/plugins` → search "keynot" → install. The `AGENTS.md` file tells Codex to read the skill automatically.
+Restart Codex in that directory. The `AGENTS.md` tells it to read the skill when you ask for slides. Repeat for each project where you want keynot available.
 
 ### Gemini CLI
 
