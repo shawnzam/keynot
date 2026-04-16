@@ -191,9 +191,6 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
   transition: color .2s, background .2s;
 }
 .nav button:hover { color: #fff; background: rgba(255,255,255,.12); }
-.dots {
-  display: flex; align-items: center; gap: 6px;
-}
 .dot {
   width: 7px; height: 7px; border-radius: 50%;
   background: rgba(255,255,255,.3); cursor: pointer;
