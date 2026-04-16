@@ -59,18 +59,17 @@ Ask Claude for "slides", "a deck", or "something to present" and keynot activate
 
 ## Install
 
-### Option A — Via `/plugin` (recommended)
+### Claude Code
 
-keynot ships its own Claude Code plugin marketplace. Add it once, install the plugin:
+keynot ships its own plugin marketplace. Add it once, install the plugin:
 
 ```
 /plugin marketplace add shawnzam/keynot
 /plugin install keynot@keynot-marketplace
 ```
 
-That's it. The skill is now available in every Claude Code session.
-
-#### Updating
+<details>
+<summary><strong>Updating</strong></summary>
 
 ```
 /plugin marketplace update keynot-marketplace
@@ -79,28 +78,52 @@ That's it. The skill is now available in every Claude Code session.
 ```
 
 Self-hosted marketplaces don't auto-update. Run these whenever you want to pull the latest.
+</details>
 
-### Option B — Drop-in SKILL.md (no plugin manifest)
+### Codex
 
-If you just want the skill without the plugin wrapper:
+Clone the repo and install via the `/plugins` menu:
 
 ```bash
-# User-scoped (available everywhere)
-mkdir -p ~/.claude/skills/keynot
-curl -fsSL https://raw.githubusercontent.com/shawnzam/keynot/main/skills/keynot/SKILL.md \
-  -o ~/.claude/skills/keynot/SKILL.md
-
-# Or project-scoped
-mkdir -p .claude/skills/keynot
-curl -fsSL https://raw.githubusercontent.com/shawnzam/keynot/main/skills/keynot/SKILL.md \
-  -o .claude/skills/keynot/SKILL.md
+# macOS / Linux
+git clone https://github.com/shawnzam/keynot.git ~/.codex/plugins/keynot
 ```
 
-Then restart Claude Code.
+Then in Codex: `/plugins` → search "keynot" → install. The `AGENTS.md` file tells Codex to read the skill automatically.
 
-### Option C — As a reference
+### Gemini CLI
 
-The `SKILL.md` file is self-contained. Read it, copy the CSS/JS shell, and build decks by hand if you prefer.
+```bash
+gemini extensions install https://github.com/shawnzam/keynot
+```
+
+### Cursor, Windsurf, Cline, or any other agent
+
+```bash
+npx skills add shawnzam/keynot -a cursor
+npx skills add shawnzam/keynot -a windsurf
+npx skills add shawnzam/keynot -a cline
+npx skills add shawnzam/keynot -a github-copilot
+```
+
+Or install generically (supports 40+ agents):
+
+```bash
+npx skills add shawnzam/keynot
+```
+
+> **Windows note:** if symlinks fail, add the `--copy` flag.
+
+### Manual drop-in
+
+If none of the above apply, the `SKILL.md` is self-contained markdown. Copy it wherever your agent reads instructions:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/shawnzam/keynot/main/skills/keynot/SKILL.md \
+  -o SKILL.md
+```
+
+Read it, point your agent at it, and go.
 
 ## How to use
 
