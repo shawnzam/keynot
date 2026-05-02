@@ -170,7 +170,7 @@ uv run --with python-pptx <script>.py
 
 No system-wide installs — `uv` handles the dependency inline. See the proof-of-concept: [**keynot-for-zombies-pptx.py**](examples/keynot-for-zombies-pptx.py) → [**keynot-for-zombies.pptx**](examples/keynot-for-zombies.pptx).
 
-**Note:** PPTX output is a solid starting point but not a pixel-perfect replica of the HTML deck. Web fonts fall back to system equivalents (Georgia, Arial), gradients become solid fills, and animations are omitted. Double-check alignment and font rendering in PowerPoint before presenting.
+**Note:** PPTX output is a solid starting point but not a pixel-perfect replica of the HTML deck. Web fonts fall back to system equivalents (Georgia, Arial), gradients become solid fills, and animations are omitted. Double-check alignment and font rendering in PowerPoint before presenting. If you just need a static handout, [printing to PDF](#exporting-to-pdf) is faster and pixel-perfect.
 
 ## Example use cases
 
