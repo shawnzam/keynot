@@ -634,6 +634,107 @@ This skill is compatible with Claude API (Codex) usage. Key considerations:
  
 ---
  
+## PPTX Export (PowerPoint)
+
+When the user explicitly asks for a `.pptx` file, generate a Python script that uses `python-pptx` to build the deck programmatically. The user runs it with:
+
+```bash
+uv run --with python-pptx <script>.py
+```
+
+No system-wide installs required — `uv` handles the dependency inline.
+
+### When to use PPTX instead of HTML
+
+- User explicitly asks for `.pptx` or "PowerPoint"
+- User needs recipients to edit slides in Office
+- User says "I need to share this with someone who uses PowerPoint"
+
+### How it works
+
+Same content extraction and brand logic as HTML — extract colors, fonts, layout intent from the prompt. Then emit a self-contained `.py` script instead of an `.html` file.
+
+### PPTX Generation Pattern
+
+```python
+from pptx import Presentation
+from pptx.util import Inches, Pt
+from pptx.dml.color import RGBColor
+from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
+from pptx.enum.shapes import MSO_SHAPE
+
+# Brand colors mapped from CSS variables
+PRIMARY = RGBColor(0x1A, 0x1A, 0x2E)
+ACCENT = RGBColor(0xE9, 0x45, 0x60)
+
+prs = Presentation()
+prs.slide_width = Inches(16)
+prs.slide_height = Inches(10)
+blank_layout = prs.slide_layouts[6]  # blank — full control
+
+def set_slide_bg(slide, color):
+    fill = slide.background.fill
+    fill.solid()
+    fill.fore_color.rgb = color
+
+def add_text_box(slide, left, top, width, height, text,
+                 font_size=18, bold=False, italic=False,
+                 color=RGBColor(0xFF,0xFF,0xFF), font_name="Arial"):
+    txBox = slide.shapes.add_textbox(left, top, width, height)
+    tf = txBox.text_frame
+    tf.word_wrap = True
+    p = tf.paragraphs[0]
+    p.text = text
+    p.font.size = Pt(font_size)
+    p.font.bold = bold
+    p.font.italic = italic
+    p.font.color.rgb = color
+    p.font.name = font_name
+
+# Build slides...
+slide1 = prs.slides.add_slide(blank_layout)
+set_slide_bg(slide1, PRIMARY)
+add_text_box(slide1, Inches(0.8), Inches(3), Inches(10), Inches(3),
+             "Title Here", font_size=72, font_name="Georgia")
+
+prs.save("output.pptx")
+print("Saved: output.pptx")
+```
+
+### Mapping HTML layouts to PPTX
+
+| HTML Pattern | PPTX Equivalent |
+|---|---|
+| Split panel (dark left / light right) | Rectangle shape as left bg + text boxes on each side |
+| Stat columns | Large-font text boxes with small label text boxes below |
+| Value cards with colored bars | Thin rectangle shapes as accent bars + adjacent text boxes |
+| Approach rows (numbered steps) | Large number text box + title/body text boxes offset right |
+| Full-bleed background | `set_slide_bg()` with brand color |
+
+### Important caveats
+
+**Warn the user:** PPTX output is an approximation of the HTML deck, not a pixel-perfect replica. python-pptx does not support CSS, gradients, `clamp()` scaling, or web fonts. The generated deck will:
+
+- Use system fonts (Arial, Georgia) as fallbacks for Google Fonts
+- Approximate gradients with solid colors
+- Skip animations and reveals (static slides)
+- Require manual touch-up for precise alignment
+
+Always tell the user: *"The .pptx is a solid starting point but may need minor adjustments in PowerPoint — check alignment and font rendering before presenting."*
+
+### Font mapping
+
+| HTML (Google Font) | PPTX fallback |
+|---|---|
+| Cormorant Garamond | Georgia |
+| DM Sans | Arial |
+| Playfair Display | Georgia |
+| Inter | Arial |
+| Any serif | Georgia or Times New Roman |
+| Any sans-serif | Arial or Calibri |
+
+---
+
 ## Quick Reference: Palette Slots
  
 Every deck fills these slots. Populate from the brand guide, then theme programmatically via CSS variables.
