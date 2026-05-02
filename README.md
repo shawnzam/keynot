@@ -56,28 +56,29 @@ Ask Claude for "slides", "a deck", or "something to present" and keynot activate
 - **Layout library** — split panels, stat columns, value cards, approach rows, photo panels
 - **Embedded assets** — fonts via CDN, images via base64 — one file, no broken links
 - **PDF export** — `Cmd+P` → Save as PDF gives one slide per page, backgrounds intact, no extra tooling
+- **PPTX export** — ask for PowerPoint and keynot generates a `python-pptx` script you run with `uv run --with python-pptx`
 
 ## Install
 
 ### Claude Code
 
-keynot ships its own plugin marketplace. Add it once, install the plugin:
+keynot is published in the official Claude Code plugin marketplace. Install it with one command:
+
+```
+/plugin install keynot@claude-plugins-official
+```
+
+The official marketplace is pre-registered — no `marketplace add` step needed. You can also browse it at [claude.com/plugins](https://claude.com/plugins) or run `/plugin` and pick keynot from the **Discover** tab.
+
+<details>
+<summary><strong>Self-hosted (pre-marketplace) install</strong></summary>
+
+If you're pinned to an older Claude Code build without the official marketplace, the self-hosted route still works:
 
 ```
 /plugin marketplace add shawnzam/keynot
 /plugin install keynot@keynot-marketplace
 ```
-
-<details>
-<summary><strong>Updating</strong></summary>
-
-```
-/plugin marketplace update keynot-marketplace
-/plugin install keynot@keynot-marketplace
-/reload-plugins
-```
-
-Self-hosted marketplaces don't auto-update. Run these whenever you want to pull the latest.
 </details>
 
 ### Codex (project-scoped)
@@ -159,6 +160,18 @@ See a generated example: [**keynot-for-zombies.pdf**](examples/keynot-for-zombie
 
 **Tip:** enable "Background graphics" in the print dialog if it's off by default, and pick a landscape paper size (or let the browser fit to the `1600 × 1000` `@page` rule). Firefox handles pixel-based `@page size` less reliably than Chrome/Safari — if output looks wrong there, the skill docs include a physical-units fallback.
 
+## Exporting to PPTX
+
+If your audience needs editable PowerPoint files, ask keynot for `.pptx` output. It generates a Python script that builds the deck using `python-pptx`. Run it with:
+
+```bash
+uv run --with python-pptx <script>.py
+```
+
+No system-wide installs — `uv` handles the dependency inline. See the proof-of-concept: [**keynot-for-zombies-pptx.py**](examples/keynot-for-zombies-pptx.py) → [**keynot-for-zombies.pptx**](examples/keynot-for-zombies.pptx).
+
+**Note:** PPTX output is a solid starting point but not a pixel-perfect replica of the HTML deck. Web fonts fall back to system equivalents (Georgia, Arial), gradients become solid fills, and animations are omitted. Double-check alignment and font rendering in PowerPoint before presenting.
+
 ## Example use cases
 
 - **Investor or pitch decks** — Paste your narrative, drop in a brand guide, get a polished deck in minutes. Iterate in plain English instead of wrestling with slide masters.
@@ -180,10 +193,11 @@ The [`SKILL.md`](skills/keynot/SKILL.md) file walks Claude through:
 5. **Typography rules** — display, heading, eyebrow, and body tokens with `clamp()` scaling
 6. **Iteration workflow** — how to make surgical edits without corrupting JavaScript
 7. **Pitfalls** — JS operator corruption from blanket regex, base64 sizing, emoji hygiene
+8. **PPTX export** — generating editable PowerPoint decks via `python-pptx` when explicitly requested
 
 ## When not to use
 
-- **PowerPoint is required** — your audience needs to edit in Office. Use `.pptx` instead.
+- **PowerPoint is required** — your audience needs to edit in Office. keynot can [export to PPTX](#exporting-to-pptx), but the output may need manual touch-up.
 - **You need real-time collaboration** — Google Slides wins here.
 - **Heavy animations or transitions** — keynot does opacity fades and staggered reveals, not 3D cube transitions.
 - **Video embeds** — possible, but bloats the single-file deck quickly.
